@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Repository
+namespace BLL.Interface
 {
-    public interface IRepository
+    public interface IValidator <in TSource>
     {
-        IEnumerable<string> GetAll();
+        bool IsValid(TSource value);
     }
 }
