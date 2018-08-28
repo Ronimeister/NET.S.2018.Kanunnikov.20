@@ -7,10 +7,22 @@ using BLL.Interface;
 
 namespace BLL.Concrete
 {
+    /// <summary>
+    /// Class that implements xml storage functionality
+    /// </summary>
     public class XMLStorage : IStorage<Uri>
     {
+        #region Readonly fields
         private readonly string _storageName;
+        #endregion
 
+        #region .ctors
+        /// <summary>
+        /// .ctor for <see cref="XMLStorage"/> class
+        /// </summary>
+        /// <param name="storageName">Storage name</param>
+        /// <exception cref="ArgumentException">Throws when <param name="storageName"></param> is equal to null or empty</exception>
+        /// <exception cref="FileNotFoundException">Throws when there is no such file with <param name="storageName"></param></exception>
         public XMLStorage(string storageName)
         {
             if (string.IsNullOrEmpty(storageName))
@@ -25,7 +37,14 @@ namespace BLL.Concrete
 
             _storageName = storageName;
         }
+        #endregion
 
+        #region Public API
+        /// <summary>
+        /// Save changes in storage
+        /// </summary>
+        /// <param name="values">Changed elements</param>
+        /// <exception cref="ArgumentNullException">Throws when <param name="values"></param> is equal to null</exception>
         public void Save(IEnumerable<Uri> values)
         {
             if (values == null)
@@ -35,7 +54,9 @@ namespace BLL.Concrete
 
             SaveInner(values);
         }
+        #endregion
 
+        #region Private methods
         private void SaveInner(IEnumerable<Uri> values)
         {
             XDocument xDocument = new XDocument();
@@ -98,5 +119,6 @@ namespace BLL.Concrete
                 root.Add(element);
             }
         }
+        #endregion
     }
 }
